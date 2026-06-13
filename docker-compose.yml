@@ -4,8 +4,11 @@ services:
   api:
     build: .
     container_name: pdf-converter-api
-    ports:
-      - "${HOST_PORT:-8000}:8000"
+    # NOTA: En Coolify no es necesario mapear puertos físicos al host.
+    # Coolify detecta el 'EXPOSE 8000' del Dockerfile y enruta dinámicamente.
+    # Para pruebas en local, puedes descomentar las siguientes dos líneas:
+    # ports:
+    #   - "8000:8000"
     environment:
       - API_KEY=${API_KEY:-tu_super_secreto_aqui}
       - BASE_URL=${BASE_URL:-http://localhost:8000}
