@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  api:
+    build: .
+    container_name: pdf-converter-api
+    ports:
+      - "${HOST_PORT:-8000}:8000"
+    environment:
+      - API_KEY=${API_KEY:-tu_super_secreto_aqui}
+      - BASE_URL=${BASE_URL:-http://localhost:8000}
+    restart: unless-stopped

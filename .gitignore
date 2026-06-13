@@ -1,0 +1,34 @@
+# Caches y compilaciones
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Entornos virtuales
+.venv/
+venv/
+ENV/
+env/
+
+# Archivos de configuración locales
+.env
+.env.*
+!.env.example
+
+# Archivos de pruebas locales (Excel y PDF generados)
+*.pdf
+*.xlsx
+*.xls
+!spec.md
+
+# IDEs y editores
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp

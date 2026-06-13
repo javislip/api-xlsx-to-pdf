@@ -1,0 +1,41 @@
+#!/bin/bash
+
+# ==============================================================================
+# EJEMPLOS DE INVOCACIÓN DE LA API DE CONVERSIÓN XLSX A PDF (DESCARGA TEMPORAL)
+# ==============================================================================
+# 1. Petición POST para convertir el archivo y obtener el enlace JSON de descarga.
+# 2. Petición GET para descargar el archivo PDF.
+# ==============================================================================
+
+# --- EJEMPLO BASH (Linux / macOS) ---
+
+# Paso 1: Convertir y guardar la respuesta JSON
+echo "1. Enviando archivo Excel para conversión..."
+RESPUESTA_JSON=$(curl -s -X POST http://localhost:8000/convert \
+  -H "X-API-Key: tu_super_secreto_aqui" \
+  -F "file=@sample.xls")
+
+echo "Respuesta del servidor: $RESPUESTA_JSON"
+
+# Extraer URL de descarga usando grep/sed sencillos (para no depender de jq)
+DOWNLOAD_URL=$(echo "$RESPUESTA_JSON" | grep -oP '(?<="download_url":")[^"]+')
+
+# Paso 2: Descargar el archivo convertido
+if [ ! -z "$DOWNLOAD_URL" ]; then
+  echo "2. Descargando el PDF desde la URL temporal: $DOWNLOAD_URL"
+  curl -s "$DOWNLOAD_URL" --output resultado.pdf
+  echo "Descarga finalizada. Guardado como 'resultado.pdf'."
+else
+  echo "Error: No se pudo obtener la URL de descarga."
+fi
+
+
+# --- EJEMPLO POWERSHELL (Windows) ---
+# # Paso 1: Petición de conversión
+# $Response = Invoke-RestMethod -Uri "http://localhost:8000/convert" -Method Post -Headers @{ "X-API-Key" = "tu_super_secreto_aqui" } -Form @{ file = Get-Item "sample.xls" }
+# $DownloadUrl = $Response.download_url
+# Write-Host "URL temporal obtenida: $DownloadUrl"
+#
+# # Paso 2: Descargar el PDF
+# Invoke-RestMethod -Uri $DownloadUrl -Method Get -OutFile "resultado.pdf"
+# Write-Host "Archivo guardado como 'resultado.pdf'."
