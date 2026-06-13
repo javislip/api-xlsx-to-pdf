@@ -8,7 +8,7 @@ ENV PYTHONUNBUFFERED=1
 
 # Instalar dependencias del sistema (LibreOffice headless)
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    libreoffice \
+    libreoffice-nogui \
     && rm -rf /var/lib/apt/lists/*
 
 # Establecer el directorio de trabajo en el contenedor
